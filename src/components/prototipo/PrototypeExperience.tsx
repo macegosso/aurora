@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import type {
   ChatMsg,
@@ -21,18 +21,43 @@ const CASE_LABEL: Record<string, string> = {
   e_nao_honesto: "O “não” honesto",
 };
 
-const OUTCOME: Record<Outcome, { label: string; color: string; dot: string }> = {
-  resolve: { label: "Resolver", color: "text-teal", dot: "#34e3c4" },
-  route: { label: "Rotear", color: "text-purple", dot: "#9d8bff" },
-  honest_no: { label: "Dizer a verdade", color: "text-gold", dot: "#f0c24b" },
-  cadunico: { label: "Desbloquear pré-requisito", color: "text-coral", dot: "#ff7e5a" },
+const OUTCOME: Record<Outcome, { label: string; color: string }> = {
+  resolve: { label: "Resolver", color: "#34e3c4" },
+  route: { label: "Rotear", color: "#9d8bff" },
+  honest_no: { label: "Dizer a verdade", color: "#f0c24b" },
+  cadunico: { label: "Desbloquear pré-requisito", color: "#ff7e5a" },
 };
 
 const prettySlug = (s: string) => s.replace(/_/g, " ");
 
-function LayerLabel({ color, children }: { color: string; children: React.ReactNode }) {
+/** parse "frase → critério; outra → outro" patterns out of the raio-X ai text */
+function parseArrows(text?: string): { from: string; to: string }[] {
+  if (!text || !text.includes("→")) return [];
+  const tail = text.includes(":") ? text.slice(text.indexOf(":") + 1) : text;
+  return tail
+    .split(/[;]/)
+    .map((seg) => seg.split("→"))
+    .filter((p) => p.length === 2)
+    .map(([from, to]) => ({
+      from: from.replace(/["'“”]/g, "").trim(),
+      to: to.trim().replace(/\.$/, ""),
+    }))
+    .filter((p) => p.from && p.to);
+}
+
+function LayerLabel({
+  color,
+  scan,
+  children,
+}: {
+  color: string;
+  scan?: boolean;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="mb-3 flex items-center gap-2 font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+    <div
+      className={`mb-3 flex items-center gap-2 rounded-md font-mono text-[11px] tracking-[0.16em] text-muted uppercase ${scan ? "scanline" : ""}`}
+    >
       <span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} />
       {children}
     </div>
@@ -52,16 +77,45 @@ function DataBlock({ label, children }: { label: string; children: React.ReactNo
 
 /* ---------------- raio-X ---------------- */
 
+function ArrowMap({ pairs }: { pairs: { from: string; to: string }[] }) {
+  return (
+    <div className="mt-3 space-y-2">
+      {pairs.map((p, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 + i * 0.12 }}
+          className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 rounded-lg border border-line bg-bg2/60 p-2"
+        >
+          <span className="text-right text-[12px] text-soft">“{p.from}”</span>
+          <motion.span
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.25 + i * 0.12, duration: 0.4 }}
+            className="inline-block h-px w-7 origin-left bg-gradient-to-r from-teal to-purple"
+          />
+          <span className="text-[12px] font-medium text-purple">{p.to}</span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 function XrayPanel({ xray, stepKey }: { xray: Xray; stepKey: string }) {
+  const pairs = useMemo(() => parseArrows(xray.ai), [xray.ai]);
+  const aiText = pairs.length && xray.ai?.includes(":") ? xray.ai!.slice(0, xray.ai!.indexOf(":") + 1) : xray.ai;
   const rows = [
-    { k: "O que está acontecendo", v: xray.seen, c: "text-soft" },
-    { k: "O que a Aurora faz", v: xray.ai, c: "text-text" },
-    { k: "Por que precisa de IA", v: xray.why, c: "text-soft" },
+    { k: "O que está acontecendo", v: xray.seen, c: "text-soft", arrows: false },
+    { k: "O que a Aurora faz", v: aiText, c: "text-text", arrows: true },
+    { k: "Por que precisa de IA", v: xray.why, c: "text-soft", arrows: false },
   ].filter((r) => r.v);
 
   return (
     <div className="rounded-2xl border border-line glass p-5">
-      <LayerLabel color="#9d8bff">O raio-X · o raciocínio</LayerLabel>
+      <LayerLabel color="#9d8bff" scan>
+        O raio-X · o raciocínio
+      </LayerLabel>
       <AnimatePresence mode="wait">
         <motion.div
           key={stepKey}
@@ -80,6 +134,7 @@ function XrayPanel({ xray, stepKey }: { xray: Xray; stepKey: string }) {
                 {r.k}
               </div>
               <p className={`text-[13.5px] leading-snug ${r.c}`}>{r.v}</p>
+              {r.arrows && pairs.length ? <ArrowMap pairs={pairs} /> : null}
             </motion.div>
           ))}
           {xray.chips?.length ? (
@@ -139,8 +194,11 @@ function InternalsPanel({
                 <div className="font-mono text-[10px] tracking-[0.12em] text-muted uppercase">
                   Triagem
                 </div>
-                <div className={`mt-1 flex items-center gap-2 font-display text-[16px] leading-tight font-semibold ${meta.color}`}>
-                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: meta.dot }} />
+                <div
+                  className="mt-1 flex items-center gap-2 font-display text-[16px] leading-tight font-semibold"
+                  style={{ color: meta.color }}
+                >
+                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: meta.color }} />
                   {triage.label}
                 </div>
               </div>
@@ -268,27 +326,41 @@ function InternalsPanel({
 export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
   const [scenarioId, setScenarioId] = useState(scenarios[0].id);
   const [stepIndex, setStepIndex] = useState(0);
+  const [playing, setPlaying] = useState(false);
 
   const scenario = scenarios.find((s) => s.id === scenarioId) ?? scenarios[0];
   const steps = scenario.steps;
   const step: ScenarioStep | undefined = steps[stepIndex];
   const meta = OUTCOME[scenario.outcomeType];
 
+  const total = steps.length;
+  const atStart = stepIndex === 0;
+  const atEnd = stepIndex === total - 1;
+  const stageName = scenario.stages[stepIndex] ?? step?.kicker;
+
   const select = (id: string) => {
     setScenarioId(id);
     setStepIndex(0);
   };
+
+  // auto-play: advance through the steps; pauses at the end. Manual stepping
+  // always works and the content is fully visible regardless of play state.
+  const stepDur = 2400 + (step?.chat.length ?? 0) * 750;
+  useEffect(() => {
+    if (!playing) return;
+    if (atEnd) {
+      setPlaying(false);
+      return;
+    }
+    const t = window.setTimeout(() => setStepIndex((i) => Math.min(total - 1, i + 1)), stepDur);
+    return () => clearTimeout(t);
+  }, [playing, stepIndex, scenarioId, atEnd, total, stepDur]);
 
   const { messages, animateFrom } = useMemo(() => {
     const prior = steps.slice(0, stepIndex).flatMap((s) => s.chat);
     const current = steps[stepIndex]?.chat ?? [];
     return { messages: [...prior, ...current] as ChatMsg[], animateFrom: prior.length };
   }, [steps, stepIndex]);
-
-  const total = steps.length;
-  const atStart = stepIndex === 0;
-  const atEnd = stepIndex === total - 1;
-  const stageName = scenario.stages[stepIndex] ?? step?.kicker;
 
   return (
     <div>
@@ -340,30 +412,56 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
         </div>
         <div className="flex items-start">
           <span
-            className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-[12.5px] font-medium ${meta.color}`}
-            style={{ borderColor: meta.dot + "55", background: meta.dot + "1a" }}
+            className="inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-[12.5px] font-medium"
+            style={{ borderColor: meta.color + "55", background: meta.color + "1a", color: meta.color }}
           >
-            <span className="h-2 w-2 rounded-full" style={{ background: meta.dot }} />
+            <span className="h-2 w-2 rounded-full" style={{ background: meta.color }} />
             Saída: {meta.label}
           </span>
         </div>
       </motion.div>
 
-      {/* stage title */}
+      {/* stage title + transport */}
       {step ? (
-        <div className="mt-7">
-          <div className="font-mono text-[11px] tracking-[0.16em] text-coral uppercase">
-            {step.kicker}
+        <div className="mt-7 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div className="font-mono text-[11px] tracking-[0.16em] text-coral uppercase">
+              {step.kicker}
+            </div>
+            <h2 className="mt-1 font-display text-[clamp(22px,3vw,30px)] font-semibold tracking-tight text-text">
+              {step.title}
+            </h2>
           </div>
-          <h2 className="mt-1 font-display text-[clamp(22px,3vw,30px)] font-semibold tracking-tight text-text">
-            {step.title}
-          </h2>
+          <button
+            type="button"
+            data-cursor
+            onClick={() => {
+              if (atEnd) setStepIndex(0);
+              setPlaying((p) => !p);
+            }}
+            className="inline-flex items-center gap-2 rounded-full border border-line2 bg-card px-4 py-2 text-[12.5px] text-soft transition-all hover:text-text"
+          >
+            <span className="text-teal">{playing ? "❚❚" : "▶"}</span>
+            {playing ? "Pausar" : atEnd ? "Reiniciar" : "Reproduzir"}
+          </button>
         </div>
       ) : null}
 
+      {/* progress bar */}
+      <div className="mt-4 h-[3px] w-full overflow-hidden rounded-full bg-line">
+        <motion.div
+          key={`${scenario.id}-${stepIndex}-${playing}`}
+          className="h-full rounded-full"
+          style={{ background: "var(--aurora)" }}
+          initial={{ width: `${(stepIndex / total) * 100}%` }}
+          animate={{ width: playing ? `${((stepIndex + 1) / total) * 100}%` : `${((stepIndex + 1) / total) * 100}%` }}
+          transition={{ duration: playing ? stepDur / 1000 : 0.4, ease: playing ? "linear" : "easeOut" }}
+        />
+      </div>
+
       {/* three layers */}
-      <div className="mt-5 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,400px)_1fr]">
-        <div className="flex flex-col">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,400px)_1fr]">
+        <div className="flex flex-col lg:sticky lg:top-24 lg:self-start">
           <LayerLabel color="#ff7e5a">A experiência · no WhatsApp</LayerLabel>
           <div className="h-[560px]">
             <ChatPanel messages={messages} animateFrom={animateFrom} />
@@ -380,16 +478,15 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
             />
           ) : null}
 
-          {/* ending */}
           <AnimatePresence>
             {atEnd && scenario.ending ? (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="rounded-2xl border p-5"
-                style={{ borderColor: meta.dot + "55", background: meta.dot + "12" }}
+                style={{ borderColor: meta.color + "55", background: meta.color + "12" }}
               >
-                <div className="font-mono text-[11px] tracking-[0.14em] uppercase" style={{ color: meta.dot }}>
+                <div className="font-mono text-[11px] tracking-[0.14em] uppercase" style={{ color: meta.color }}>
                   Desfecho
                 </div>
                 <div className="mt-1.5 font-display text-[18px] font-semibold text-text">
@@ -421,7 +518,10 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
         <div className="flex items-center justify-between gap-4">
           <button
             type="button"
-            onClick={() => setStepIndex((i) => Math.max(0, i - 1))}
+            onClick={() => {
+              setPlaying(false);
+              setStepIndex((i) => Math.max(0, i - 1));
+            }}
             disabled={atStart}
             data-cursor
             className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-5 py-2.5 text-[13.5px] text-soft transition-all hover:border-line2 hover:bg-card2 disabled:cursor-not-allowed disabled:opacity-35"
@@ -429,15 +529,16 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
             ← Voltar
           </button>
 
-          <div className="text-center">
-            <div className="font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
-              {stageName} · {stepIndex + 1}/{total}
-            </div>
+          <div className="text-center font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+            {stageName} · {stepIndex + 1}/{total}
           </div>
 
           <button
             type="button"
-            onClick={() => setStepIndex((i) => Math.min(total - 1, i + 1))}
+            onClick={() => {
+              setPlaying(false);
+              setStepIndex((i) => Math.min(total - 1, i + 1));
+            }}
             disabled={atEnd}
             data-cursor
             data-cursor-label="próximo"
@@ -457,7 +558,10 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
               <button
                 key={label + i}
                 type="button"
-                onClick={() => setStepIndex(i)}
+                onClick={() => {
+                  setPlaying(false);
+                  setStepIndex(i);
+                }}
                 data-cursor
                 className={`rounded-full px-3 py-1.5 text-[11.5px] transition-all ${
                   active

@@ -1,4 +1,4 @@
-import type { Scenario } from "./types";
+import type { Scenario, KbEntry, TriageRules } from "./types";
 
 export const SCENARIOS: Scenario[] = [
   {
@@ -1191,3 +1191,129 @@ export const SCENARIOS: Scenario[] = [
     }
   }
 ];
+
+export const KNOWLEDGE_BASE: KbEntry[] = [
+  {
+    "id": "bpc_natureza",
+    "topic": "Natureza do BPC",
+    "rule": "Benefício assistencial (não previdenciário); não exige contribuição; não paga 13º nem gera pensão.",
+    "source": "CF art. 203, V; Lei 8.742/1993 (LOAS) art. 20; Decreto 6.214/2007",
+    "plain": "É um direito de quem precisa, não uma aposentadoria — não exige ter contribuído.",
+    "volatile": false
+  },
+  {
+    "id": "bpc_publico",
+    "topic": "Quem tem direito",
+    "rule": "Idoso com 65+ anos OU pessoa com deficiência com impedimento de longo prazo (mínimo 2 anos) que, com barreiras, obstrua a participação plena.",
+    "source": "Lei 8.742/1993, art. 20",
+    "plain": "Tem direito quem tem 65+ ou uma deficiência que dura pelo menos 2 anos e atrapalha a vida em sociedade.",
+    "volatile": false
+  },
+  {
+    "id": "bpc_renda",
+    "topic": "Critério de renda",
+    "rule": "Renda mensal per capita do grupo familiar igual ou inferior a 1/4 do salário mínimo (R$ 405,25 em 2026).",
+    "source": "Lei 8.742/1993, art. 20, §3º; SM pelo Decreto 12.797/2025",
+    "plain": "Soma a renda da casa, divide pelo nº de pessoas; até R$ 405,25 por pessoa passa nesse critério.",
+    "volatile": true
+  },
+  {
+    "id": "rendas_excluidas",
+    "topic": "Rendas que não entram no cálculo",
+    "rule": "Excluem-se: outro BPC recebido na família (art. 20 §14); Bolsa Família e transferências (art. 19-A); aposentadoria/benefício de até 1 SM de idoso, quando o requerente também é idoso (Súmula 415 STJ; Estatuto do Idoso art. 34).",
+    "source": "Lei 8.742/1993; Lei 10.741/2003; Súmula 415 STJ",
+    "plain": "Atenção: alguns valores NÃO contam na conta. Se o INSS somou um desses, ele errou.",
+    "volatile": false
+  },
+  {
+    "id": "renda_nao_absoluta",
+    "topic": "O 1/4 não é absoluto",
+    "rule": "O critério de 1/4 do SM não é absoluto; é possível comprovar vulnerabilidade por outros meios (ex.: despesas extraordinárias com a deficiência). A via judicial é mais flexível.",
+    "source": "STF, Tema 173 (RE 567.985)",
+    "plain": "Mesmo com renda um pouco acima, despesas altas com a deficiência podem mudar o quadro — e a Justiça costuma aceitar.",
+    "volatile": false
+  },
+  {
+    "id": "biopsicossocial",
+    "topic": "Avaliação da deficiência",
+    "rule": "A deficiência é comprovada por avaliação multiprofissional: perícia médica + avaliação social, que medem o impacto funcional e as barreiras — não apenas o diagnóstico.",
+    "source": "Lei 8.742/1993, art. 20, §6º; Decreto 6.214/2007",
+    "plain": "A perícia não avalia SE tem a condição — avalia o QUANTO ela afeta a vida. Por isso o laudo sozinho quase nunca basta.",
+    "volatile": false
+  },
+  {
+    "id": "impedimento_2anos",
+    "topic": "Impedimento de longo prazo",
+    "rule": "O impedimento deve ter duração mínima de 2 anos.",
+    "source": "Lei 8.742/1993, art. 20, §10",
+    "plain": "A deficiência precisa durar pelo menos 2 anos para caracterizar o direito.",
+    "volatile": false
+  },
+  {
+    "id": "cadunico",
+    "topic": "CadÚnico (pré-requisito)",
+    "rule": "Inscrição no Cadastro Único obrigatória, atualizada há no máximo 24 meses, feita no CRAS.",
+    "source": "Decreto 6.214/2007; normas do CadÚnico (MDS)",
+    "plain": "Antes de pedir, o CadÚnico precisa estar atualizado (máx. 2 anos), feito no CRAS. Vencido, trava o pedido.",
+    "volatile": false
+  },
+  {
+    "id": "valores_2026",
+    "topic": "Valores de 2026",
+    "rule": "Salário mínimo R$ 1.621,00; valor do BPC R$ 1.621,00 (1 SM); limite de renda per capita (1/4) R$ 405,25.",
+    "source": "Decreto 12.797/2025",
+    "plain": "Em 2026: salário mínimo e BPC = R$ 1.621; um quarto = R$ 405,25.",
+    "volatile": true
+  },
+  {
+    "id": "recurso_prazo",
+    "topic": "Prazo do recurso",
+    "rule": "30 dias corridos a partir da ciência da decisão; fora do prazo, é intempestivo e indeferido sem análise de mérito. Gratuito, sem advogado, pelo Meu INSS; permite juntar novos documentos.",
+    "source": "Decreto 3.048/99; IN INSS 128/2022",
+    "plain": "Negou? Você tem 30 dias para recorrer de graça, sem advogado, e pode anexar documentos novos.",
+    "volatile": false
+  },
+  {
+    "id": "recurso_orgao",
+    "topic": "Quem julga o recurso",
+    "rule": "O CRPS (Conselho de Recursos da Previdência Social) é órgão autônomo — não faz parte do INSS. Duas instâncias: 29 Juntas de Recursos e 4 Câmaras de Julgamento.",
+    "source": "Decreto 3.048/99; Regimento Interno do CRPS",
+    "plain": "Quem julga o recurso é um conselho independente do INSS, feito para revisar os erros dele.",
+    "volatile": false
+  },
+  {
+    "id": "via_judicial",
+    "topic": "Via judicial",
+    "rule": "Esgotadas as instâncias administrativas (ou em casos de flexibilização de renda), cabe ação na Justiça Federal / Juizado Especial Federal.",
+    "source": "legislação processual; STF Tema 173",
+    "plain": "Se o recurso não resolver, ou se depende de provar vulnerabilidade pelas despesas, o caminho é a Justiça.",
+    "volatile": false
+  }
+];
+
+export const TRIAGE_RULES: TriageRules = {
+  "summary": "A Aurora classifica cada caso em uma de quatro situações, com um nível de confiança. Abaixo do limiar, escala para um humano.",
+  "rules": [
+    {
+      "outcome": "Resolver",
+      "when": "Negativa por motivo navegacional/corrigível (impacto não demonstrado, documento faltando, erro de cálculo do INSS) E há base para reverter.",
+      "action": "Reenquadra a prova e monta o recurso administrativo. A pessoa protocola."
+    },
+    {
+      "outcome": "Rotear",
+      "when": "O mérito depende da via judicial (ex.: renda acima do limite com despesas extraordinárias; flexibilização do STF Tema 173).",
+      "action": "Encaminha a advogado verificado, com dossiê pronto e preço transparente."
+    },
+    {
+      "outcome": "Dizer a verdade",
+      "when": "O caso não atende aos critérios e não há alavanca (de renda ou de prova) que mude isso.",
+      "action": "Comunica honestamente, com a norma e uma alternativa. Não monta recurso sem base."
+    },
+    {
+      "outcome": "Bloqueio de pré-requisito",
+      "when": "Falta um pré-requisito (ex.: CadÚnico vencido).",
+      "action": "Orienta a resolver o pré-requisito (CRAS) antes de qualquer recurso."
+    }
+  ],
+  "confidence_gate": "Quando a confiança da classificação fica abaixo do limiar, ou o caso é ambíguo/sensível, a Aurora escala para revisão humana em vez de chutar."
+};

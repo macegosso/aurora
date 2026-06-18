@@ -310,6 +310,40 @@ h4 {
   }
 }
 
+/* x-ray scanline (prototype raio-X) */
+@keyframes scan-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+.scanline {
+  position: relative;
+  overflow: hidden;
+}
+.scanline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(157, 139, 255, 0.5),
+    transparent
+  );
+  width: 60%;
+  animation: scan-sweep 3.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scanline::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 /* read-progress bar (dossier) */
 .read-progress {
   position: fixed;

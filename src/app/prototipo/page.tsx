@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { SectionHeading } from "@/components/SectionHeading";
+import { HowToRead } from "@/components/prototipo/HowToRead";
 import { PrototypeExperience } from "@/components/prototipo/PrototypeExperience";
-import { SCENARIOS } from "@/data/prototype";
+import { DataReference } from "@/components/prototipo/DataReference";
+import { SCENARIOS, KNOWLEDGE_BASE, TRIAGE_RULES } from "@/data/prototype";
 
 export const metadata: Metadata = {
   title: "Protótipo",
@@ -12,11 +14,15 @@ export default function PrototipoPage() {
     <>
       <SectionHeading kicker="O protótipo" title="A demonstração navegável">
         Não é mockup de tela — é a experiência e a mecânica de IA, lado a lado.
-        Percorra o caso passo a passo e veja, a cada passo, as três camadas: a
+        Percorra cada caso passo a passo e veja, a cada passo, as três camadas: a
         conversa, o raio-X do raciocínio e os dados por baixo.
       </SectionHeading>
-      <div className="wrap pb-32">
+
+      <HowToRead />
+
+      <div className="wrap pt-10 pb-32">
         <PrototypeExperience scenarios={SCENARIOS} />
+        <DataReference triage={TRIAGE_RULES} kb={KNOWLEDGE_BASE} />
       </div>
     </>
   );

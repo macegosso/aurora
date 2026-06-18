@@ -165,3 +165,26 @@ export interface Scenario {
   steps: ScenarioStep[];
   ending: ScenarioEnding;
 }
+
+/** the citable normative base shown in "os dados por trás" */
+export interface KbEntry {
+  id: string;
+  topic: string;
+  rule: string;
+  source: string;
+  plain: string;
+  volatile?: boolean;
+}
+
+/** the honest-triage logic: one of four situations, with a confidence threshold */
+export interface TriageRule {
+  outcome: string;
+  when: string;
+  action: string;
+}
+
+export interface TriageRules {
+  summary: string;
+  rules: TriageRule[];
+  confidence_gate?: string;
+}
