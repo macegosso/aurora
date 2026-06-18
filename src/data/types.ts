@@ -77,3 +77,91 @@ export interface DossierDoc {
   subtitle?: string;
   md: string;
 }
+
+/* ---------- interactive prototype (mirrors the original prototype's data) ---------- */
+
+export type Outcome = "resolve" | "route" | "cadunico" | "honest_no";
+
+/** a WhatsApp message: text (t) or a document/photo attachment (doc + sz) */
+export interface ChatMsg {
+  who: "me" | "them";
+  t?: string;
+  doc?: string;
+  sz?: string;
+}
+
+export interface XrayChip {
+  t: string;
+  accent?: boolean;
+}
+
+/** the raio-X layer: what's happening · what the AI does · why it needs AI */
+export interface Xray {
+  seen?: string;
+  ai?: string;
+  why?: string;
+  chips?: XrayChip[];
+}
+
+export interface Triage {
+  label: string;
+  confidence: number;
+  signals?: string[];
+  reasoning?: string;
+}
+
+export interface Deadline {
+  ciencia?: string;
+  prazo_final?: string;
+  dias_restantes?: number;
+}
+
+export interface GuardrailCheck {
+  check: string;
+  status: string;
+}
+
+export interface Generation {
+  doc_type?: string;
+  excerpt?: string;
+  citations?: string[];
+}
+
+/** the dados layer: flexible — different keys surface per step */
+export interface StepInternals {
+  ocr?: Record<string, string>;
+  systems?: string[];
+  retrieval?: string[];
+  deadline?: Deadline;
+  guardrails?: GuardrailCheck[];
+  triage?: Triage;
+  generation?: Generation;
+}
+
+export interface ScenarioStep {
+  stageIndex: number;
+  kicker: string;
+  title: string;
+  chat: ChatMsg[];
+  xray: Xray;
+  internals: StepInternals;
+}
+
+export interface ScenarioEnding {
+  kind: string;
+  headline: string;
+  body: string;
+  artifact?: { title: string; excerpt?: string; citations?: string[] };
+}
+
+export interface Scenario {
+  id: string;
+  benefit: string;
+  recommended?: boolean;
+  persona: { name: string; line: string };
+  outcomeType: Outcome;
+  stages: string[];
+  letter?: { text?: string; fields?: Record<string, string> };
+  steps: ScenarioStep[];
+  ending: ScenarioEnding;
+}
