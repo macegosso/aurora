@@ -8,6 +8,35 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Aurora design-system override: remaps the prototype's CSS variables to the new
+       high-tech aurora system (near-black palette, aurora gradient, Space Grotesk).
+       !important wins over the Vite bundle's runtime-injected styles. -->
+  <style id="aurora-ds-override">
+    :root{
+      --bg:#05060e!important; --bg-2:#090b18!important; --bg-3:#0e1126!important;
+      --surface:rgba(255,255,255,.04)!important; --surface-2:rgba(255,255,255,.075)!important;
+      --line:rgba(255,255,255,.085)!important; --line-2:rgba(255,255,255,.17)!important;
+      --tx:#eef1fb!important; --tx-dim:#c4cae6!important; --tx-mute:#7d84a3!important;
+      --teal:#34e3c4!important; --teal-2:#7cf0db!important; --teal-deep:#16a78c!important;
+      --violet:#9d8bff!important; --amber:#f0c24b!important;
+      --coral:#ff7e5a!important; --coral-2:#ffb28c!important; --coral-deep:#e8694a!important;
+      --grad-primary:linear-gradient(100deg,#34e3c4 0%,#6ad7ff 26%,#9d8bff 58%,#ff5fa8 100%)!important;
+      --grad-text:linear-gradient(100deg,#34e3c4 0%,#6ad7ff 26%,#9d8bff 58%,#ff5fa8 100%)!important;
+      --font-display:"Space Grotesk","Inter",system-ui,sans-serif!important;
+    }
+    body{
+      background:
+        radial-gradient(60% 50% at 82% -5%, rgba(157,139,255,.14), transparent 70%),
+        radial-gradient(48% 42% at 4% 0%, rgba(52,227,196,.11), transparent 70%),
+        #05060e !important;
+    }
+    ::selection{ background:rgba(157,139,255,.32); }
+    ::-webkit-scrollbar{ width:9px; height:9px; }
+    ::-webkit-scrollbar-track{ background:#05060e; }
+    ::-webkit-scrollbar-thumb{ background:#2e3358; border-radius:99px; }
+    ::-webkit-scrollbar-thumb:hover{ background:#9d8bff; }
+  </style>
   <script type="module" crossorigin>function qv(e,t){for(var n=0;n<t.length;n++){const r=t[n];if(typeof r!="string"&&!Array.isArray(r)){for(const i in r)if(i!=="default"&&!(i in e)){const o=Object.getOwnPropertyDescriptor(r,i);o&&Object.defineProperty(e,i,o.get?o:{enumerable:!0,get:()=>r[i]})}}}return Object.freeze(Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}))}(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const i of document.querySelectorAll('link[rel="modulepreload"]'))r(i);new MutationObserver(i=>{for(const o of i)if(o.type==="childList")for(const a of o.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&r(a)}).observe(document,{childList:!0,subtree:!0});function n(i){const o={};return i.integrity&&(o.integrity=i.integrity),i.referrerPolicy&&(o.referrerPolicy=i.referrerPolicy),i.crossOrigin==="use-credentials"?o.credentials="include":i.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function r(i){if(i.ep)return;i.ep=!0;const o=n(i);fetch(i.href,o)}})();function Wv(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}var Of={exports:{}},Ho={},If={exports:{}},O={};/**
  * @license React
  * react.production.min.js
