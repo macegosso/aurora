@@ -15,7 +15,7 @@ const ENTRIES: Entry[] = [
   {
     href: "/deck",
     title: "O deck",
-    desc: "21 slides: do problema à convicção. A narrativa do case, nível Spec PM.",
+    desc: "Do problema ao pedido — a história e a tese do produto, em sequência.",
     accent: "#34e3c4",
     tint: "rgba(52,227,196,.14)",
     icon: <path d="M2 3h20v14H2zM8 21h8M12 17v4" />,

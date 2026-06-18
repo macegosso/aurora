@@ -47,17 +47,13 @@ function parseArrows(text?: string): { from: string; to: string }[] {
 
 function LayerLabel({
   color,
-  scan,
   children,
 }: {
   color: string;
-  scan?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <div
-      className={`mb-3 flex items-center gap-2 rounded-md font-mono text-[11px] tracking-[0.16em] text-muted uppercase ${scan ? "scanline" : ""}`}
-    >
+    <div className="mb-3 flex items-center gap-2 font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
       <span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} />
       {children}
     </div>
@@ -113,9 +109,7 @@ function XrayPanel({ xray, stepKey }: { xray: Xray; stepKey: string }) {
 
   return (
     <div className="rounded-2xl border border-line glass p-5">
-      <LayerLabel color="#9d8bff" scan>
-        O raio-X · o raciocínio
-      </LayerLabel>
+      <LayerLabel color="#9d8bff">O raio-X · o raciocínio</LayerLabel>
       <AnimatePresence mode="wait">
         <motion.div
           key={stepKey}
@@ -178,7 +172,7 @@ function InternalsPanel({
 
   return (
     <div className="rounded-2xl border border-line glass p-5">
-      <LayerLabel color="#34e3c4">Os dados · sob o capô</LayerLabel>
+      <LayerLabel color="#34e3c4">Os dados · a base por trás</LayerLabel>
       <AnimatePresence mode="wait">
         <motion.div
           key={stepKey}

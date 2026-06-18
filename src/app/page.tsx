@@ -26,8 +26,8 @@ export default function Home() {
           <p className="mt-8 max-w-[640px] text-[16px] leading-relaxed text-muted">
             Aurora é o robô do lado do cidadão: lê a carta torta, traduz o
             juridiquês, transforma a vida real em prova — e diz a verdade quando
-            não há direito. Não uma feature com ChatGPT plugado; um produto de IA
-            num mundo AI-first.
+            não há direito. Onde um formulário falharia, só um modelo de
+            linguagem dá conta.
           </p>
         </Reveal>
       </section>
