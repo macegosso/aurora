@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aurora — case de produto (AI Product Challenge · Blip)
 
-## Getting Started
+O case inteiro, conectado, como uma experiência cinematográfica e high-tech: o **deck**, o **protótipo navegável**, o **dossiê** (PRD, deep-dive, base normativa, discovery, red-team) e o **CV**.
 
-First, run the development server:
+Reconstruído como app **Next.js 16** (App Router, React 19, TypeScript, Tailwind v4) com uma camada de movimento de nível Apple: GSAP + ScrollTrigger + SplitText, Lenis (scroll suave), React Three Fiber (cena Aurora — curtain shader GLSL + núcleo holográfico) e Motion para transições.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack
+
+- **Next.js 16** · App Router · React 19 · TypeScript
+- **Tailwind CSS v4** — design system CSS-first via `@theme` em `globals.css`
+- **GSAP** (ScrollTrigger, SplitText) + `@gsap/react`
+- **Motion** (Framer Motion) — reveals, AnimatePresence, transições de rota
+- **Lenis** — scroll suave sincronizado com o ticker do GSAP
+- **React Three Fiber + Three.js** — a cena Aurora (curtain shader, núcleo iridescente, starfield)
+- **react-markdown + remark-gfm** — renderização do dossiê
+
+## Design system
+
+Tokens definidos em `src/app/globals.css` (`@theme`): superfícies near-black, acentos aurora (teal/indigo/magenta), o gradiente assinatura `--aurora`, e utilitários `.text-aurora`, `.glass`, `.ring-aurora`, `.glow`. Tipografia: **Space Grotesk** (display), **Inter** (corpo), **JetBrains Mono** (dados/labels).
+
+## Estrutura
+
+```
+src/
+  app/
+    layout.tsx        # shell: fontes, metadata, cursor, scroll suave, nav, footer
+    page.tsx          # home — hero 3D + manifesto + cards
+    template.tsx      # transição de página (motion)
+    deck/             # /deck       — visor de slides (21 slides)
+    prototipo/        # /prototipo  — iframe do protótipo
+    dossie/           # /dossie     — leitor de markdown com TOC fixo
+    cv/               # /cv         — currículo
+  components/         # Nav, Cursor, SmoothScroll, Magnetic, Reveal, home/, deck/, ...
+  data/               # deck.ts (SLIDES + CV), dossier.ts (DOSSIER), types.ts
+  lib/gsap.ts         # registro de plugins GSAP
+public/
+  prototipo.html      # o protótipo interativo, standalone (embutido via iframe)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O conteúdo (Português) foi preservado do site original. Para editar o **CV**, abra `src/data/deck.ts` e ajuste o objeto `CV`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Desenvolvimento
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev      # http://localhost:3000 (Turbopack)
+npm run build    # build de produção
+npm start        # serve o build
+```
 
-## Learn More
+## Deploy (Vercel)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+App Next padrão — sem `output` especial. Importe o repositório em **vercel.com → Add New → Project**; o framework **Next.js** é detectado automaticamente. Cada `git push` para `main` publica.

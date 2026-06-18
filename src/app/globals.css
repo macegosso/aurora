@@ -1,26 +1,285 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================================
+   AURORA — design system (high-tech / aurora-borealis dark)
+   ========================================================= */
+@theme {
+  /* surfaces — near-black with a touch of indigo */
+  --color-bg: #05060e;
+  --color-bg2: #090b18;
+  --color-panel: #0e1126;
+  --color-card: #141832;
+  --color-card2: #1c2142;
+
+  /* electric aurora accents */
+  --color-teal: #34e3c4; /* cyan-teal */
+  --color-purple: #9d8bff; /* indigo */
+  --color-pink: #ff5fa8; /* magenta */
+  --color-coral: #ff7e5a;
+  --color-coral2: #ff6e4a;
+  --color-gold: #f0c24b;
+
+  /* ink */
+  --color-text: #eef1fb;
+  --color-soft: #c4cae6;
+  --color-muted: #7d84a3;
+  --color-line: #20253f;
+  --color-line2: #2e3358;
+
+  /* type — Space Grotesk display, Inter body, JetBrains mono.
+     (font-serif intentionally maps to the display face for a global swap) */
+  --font-display: var(--font-display), system-ui, sans-serif;
+  --font-serif: var(--font-display), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jet), monospace;
+
+  --radius-xl2: 22px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* the signature aurora gradient */
+  --aurora: linear-gradient(
+    100deg,
+    #34e3c4 0%,
+    #6ad7ff 25%,
+    #9d8bff 55%,
+    #ff5fa8 100%
+  );
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  /* faint aurora wash anchored to the top so the page never reads as flat */
+  background:
+    radial-gradient(60% 50% at 80% -5%, rgba(157, 139, 255, 0.12), transparent 70%),
+    radial-gradient(50% 45% at 5% 0%, rgba(52, 227, 196, 0.1), transparent 70%),
+    var(--color-bg);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(157, 139, 255, 0.32);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* ---------- design-system utilities ---------- */
+
+/* aurora gradient text (animated drift) */
+.text-aurora {
+  background: var(--aurora);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: aurora-shift 8s ease-in-out infinite;
+}
+@keyframes aurora-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* frosted glass surface */
+.glass {
+  background: rgba(14, 17, 38, 0.55);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* hairline gradient border on hover targets */
+.ring-aurora {
+  position: relative;
+}
+.ring-aurora::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--aurora);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.ring-aurora:hover::before {
+  opacity: 1;
+}
+
+.glow {
+  box-shadow:
+    0 0 0 1px rgba(157, 139, 255, 0.2),
+    0 8px 40px -8px rgba(52, 227, 196, 0.25);
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-inline: 28px;
+}
+@media (max-width: 640px) {
+  .wrap {
+    padding-inline: 20px;
+  }
+}
+
+/* grain / vignette for cinematic depth */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+  background-image: radial-gradient(
+    130% 130% at 50% 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+/* thin scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line2);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-purple);
+}
+
+/* ---------- custom cursor ---------- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  transition: opacity 0.3s ease;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-teal);
+  box-shadow: 0 0 10px var(--color-teal);
+}
+.cursor-ring {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(157, 139, 255, 0.6);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-purple);
+  transition:
+    width 0.28s var(--ease-out-expo),
+    height 0.28s var(--ease-out-expo),
+    background 0.28s ease,
+    border-color 0.28s ease,
+    opacity 0.3s ease;
+}
+.cursor-ring[data-active="true"] {
+  width: 52px;
+  height: 52px;
+  background: rgba(157, 139, 255, 0.12);
+  border-color: rgba(157, 139, 255, 0.9);
+}
+.cursor-ring[data-label="true"] {
+  width: 78px;
+  height: 78px;
+  background: var(--color-teal);
+  border-color: var(--color-teal);
+  color: #04201b;
+}
+.cursor-ring[data-down="true"] {
+  scale: 0.82;
+}
+
+@media (pointer: fine) {
+  body.has-cursor,
+  body.has-cursor * {
+    cursor: none !important;
+  }
+}
+
+/* ---------- effects ---------- */
+@keyframes aurora-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.85;
+  }
+}
+.aurora-pulse {
+  animation: aurora-pulse 3.4s ease-in-out infinite;
+}
+
+/* read-progress bar (dossier) */
+.read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  z-index: 60;
+  background: var(--aurora);
+  transform-origin: 0 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  .text-aurora,
+  .aurora-pulse {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
