@@ -39,15 +39,19 @@ export function Cursor() {
       r.textContent = label ?? "";
     };
 
+    let down = false;
+    let sc = 1;
     const loop = () => {
       rx += (mx - rx) * 0.18;
       ry += (my - ry) * 0.18;
-      r.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+      // scale is composed AFTER the translate so pressing never displaces the ring
+      sc += ((down ? 0.8 : 1) - sc) * 0.25;
+      r.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${sc})`;
       raf = requestAnimationFrame(loop);
     };
 
-    const onDown = () => (r.dataset.down = "true");
-    const onUp = () => (r.dataset.down = "false");
+    const onDown = () => (down = true);
+    const onUp = () => (down = false);
     const onLeave = () => {
       d.style.opacity = "0";
       r.style.opacity = "0";

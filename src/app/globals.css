@@ -236,9 +236,8 @@ h4 {
   border-color: var(--color-teal);
   color: #04201b;
 }
-.cursor-ring[data-down="true"] {
-  scale: 0.82;
-}
+/* press scale is applied via JS in the transform string (after translate) so it
+   never displaces the ring — do NOT use the standalone `scale` property here */
 
 @media (pointer: fine) {
   body.has-cursor,
@@ -261,6 +260,54 @@ h4 {
 }
 .aurora-pulse {
   animation: aurora-pulse 3.4s ease-in-out infinite;
+}
+
+/* ---------- hero entrance (CSS-driven: resilient, never freezes) ----------
+   Resting state is the VISIBLE state, so if animations are disabled the hero
+   still shows. `both` holds the hidden start frame during the delay. */
+@keyframes hero-rise {
+  from {
+    transform: translateY(120%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.anim-hero-word {
+  animation: hero-rise 1.1s var(--ease-out-expo) 0.15s both;
+}
+.anim-hero-in {
+  animation: hero-in 0.9s var(--ease-out-expo) both;
+}
+.anim-hero-fade {
+  animation: hero-fade 1.4s ease 0.2s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-hero-word,
+  .anim-hero-in,
+  .anim-hero-fade {
+    animation: none !important;
+  }
 }
 
 /* read-progress bar (dossier) */
