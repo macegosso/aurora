@@ -65,15 +65,15 @@ export function ProvarSection({ slide }: { slide: Slide }) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "0px 0px -10% 0px" }}
                     transition={{ delay: 0.15 + i * 0.18 }}
-                    className="grid grid-cols-[1fr_auto_auto] items-center gap-2.5 rounded-xl border border-line bg-bg2/60 p-3"
+                    className="grid grid-cols-1 items-start gap-1.5 rounded-xl border border-line bg-bg2/60 p-3 sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-2.5"
                   >
-                    <span className="text-right text-[12.5px] text-soft">{p.from}</span>
+                    <span className="text-[12.5px] text-soft sm:text-right">{p.from}</span>
                     <motion.span
                       initial={{ scaleX: 0 }}
                       whileInView={{ scaleX: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.3 + i * 0.18, duration: 0.4 }}
-                      className="inline-block h-px w-8 origin-left bg-gradient-to-r from-teal to-purple"
+                      className="hidden h-px w-8 origin-left bg-gradient-to-r from-teal to-purple sm:inline-block"
                     />
                     <span className="text-[13px] font-semibold text-purple">{p.to}</span>
                   </motion.div>

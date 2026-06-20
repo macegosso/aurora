@@ -15,7 +15,7 @@ export default function Home() {
           </div>
         </Reveal>
         <Reveal delay={0.05}>
-          <p className="mt-6 max-w-[920px] text-[clamp(26px,4vw,44px)] leading-[1.22] font-medium tracking-tight">
+          <p className="mt-6 max-w-[920px] text-[clamp(22px,4vw,44px)] leading-[1.25] font-medium tracking-tight">
             O sistema nega <span className="text-aurora">8 milhões</span> de vezes
             por ano — e errando muito. A raiz não é falta de acesso, é{" "}
             <span className="text-teal">assimetria de informação</span>. E, pela

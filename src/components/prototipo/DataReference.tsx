@@ -21,7 +21,7 @@ export function DataReference({
         <div className="font-mono text-[12px] tracking-[0.16em] text-teal uppercase">
           Os dados por trás
         </div>
-        <h2 className="mt-2 max-w-[760px] font-display text-[clamp(24px,3.4vw,38px)] font-semibold tracking-tight">
+        <h2 className="mt-2 max-w-[760px] font-display text-[clamp(22px,5vw,38px)] font-semibold tracking-tight">
           O moat não é o modelo — é a base normativa, a triagem calibrada e os
           guard-rails.
         </h2>

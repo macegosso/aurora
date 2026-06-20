@@ -471,7 +471,7 @@ export function DeckStory({ slides }: { slides: Slide[] }) {
             <StorySection slide={s} index={i} />
           );
         return (
-          <div id={`sec-${i}`} key={i}>
+          <div id={`sec-${i}`} key={i} className="overflow-x-clip">
             {inner}
           </div>
         );

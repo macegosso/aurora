@@ -219,11 +219,11 @@ function InternalsPanel({
 
           {deadline ? (
             <DataBlock label="Prazo">
-              <div className="flex items-end gap-3">
+              <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
                 <span className="font-display text-[30px] leading-none font-bold text-coral">
                   {deadline.dias_restantes}
                 </span>
-                <span className="pb-1 text-[12px] text-muted">
+                <span className="pb-1 text-[12px] leading-snug text-muted break-words">
                   dias · ciência {deadline.ciencia} → {deadline.prazo_final}
                 </span>
               </div>
@@ -359,7 +359,7 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
   return (
     <div>
       {/* case tabs */}
-      <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1">
+      <div className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1 sm:-mx-7 sm:px-7">
         {scenarios.map((s) => {
           const active = s.id === scenarioId;
           return (
@@ -457,7 +457,7 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,400px)_1fr]">
         <div className="flex flex-col lg:sticky lg:top-24 lg:self-start">
           <LayerLabel color="#ff7e5a">A experiência · no WhatsApp</LayerLabel>
-          <div className="h-[560px]">
+          <div className="h-[clamp(440px,70vh,560px)]">
             <ChatPanel messages={messages} animateFrom={animateFrom} />
           </div>
         </div>
@@ -518,12 +518,12 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
             }}
             disabled={atStart}
             data-cursor
-            className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-5 py-2.5 text-[13.5px] text-soft transition-all hover:border-line2 hover:bg-card2 disabled:cursor-not-allowed disabled:opacity-35"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-line bg-card px-5 py-2.5 text-[13.5px] text-soft transition-all hover:border-line2 hover:bg-card2 disabled:cursor-not-allowed disabled:opacity-35"
           >
             ← Voltar
           </button>
 
-          <div className="text-center font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
+          <div className="min-w-0 truncate text-center font-mono text-[11px] tracking-[0.16em] text-muted uppercase">
             {stageName} · {stepIndex + 1}/{total}
           </div>
 
@@ -536,7 +536,7 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
             disabled={atEnd}
             data-cursor
             data-cursor-label="próximo"
-            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-semibold text-[#04111a] transition-transform disabled:cursor-not-allowed disabled:opacity-35"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-[13.5px] font-semibold text-[#04111a] transition-transform disabled:cursor-not-allowed disabled:opacity-35"
             style={{ backgroundImage: "var(--aurora)" }}
           >
             Avançar →
@@ -544,7 +544,7 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
         </div>
 
         {/* stage rail */}
-        <div className="flex flex-wrap items-center justify-center gap-1.5">
+        <div className="flex flex-wrap items-center justify-center gap-2">
           {scenario.stages.map((label, i) => {
             const active = i === stepIndex;
             const done = i < stepIndex;
@@ -557,7 +557,7 @@ export function PrototypeExperience({ scenarios }: { scenarios: Scenario[] }) {
                   setStepIndex(i);
                 }}
                 data-cursor
-                className={`rounded-full px-3 py-1.5 text-[11.5px] transition-all ${
+                className={`min-h-[36px] rounded-full px-3 py-2 text-[12px] transition-all ${
                   active
                     ? "bg-teal/15 text-teal"
                     : done

@@ -16,7 +16,7 @@ export function SectionHeading({
         <div className="mb-2.5 font-mono text-xs tracking-[0.16em] text-coral uppercase">
           {kicker}
         </div>
-        <h1 className="font-serif text-4xl font-semibold tracking-tight md:text-5xl">
+        <h1 className="font-serif text-[2rem] leading-[1.1] font-semibold tracking-tight sm:text-4xl md:text-5xl">
           {title}
         </h1>
         {children ? (

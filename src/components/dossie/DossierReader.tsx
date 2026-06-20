@@ -154,7 +154,7 @@ export function DossierReader({ docs }: { docs: DossierDoc[] }) {
         {/* Mobile: horizontal chip row */}
         <nav
           aria-label="Documentos"
-          className="-mx-5 mb-7 flex gap-2 overflow-x-auto px-5 pb-2 lg:hidden"
+          className="-mx-5 mb-7 flex gap-2 overflow-x-auto px-5 pb-2 sm:-mx-7 sm:px-7 lg:hidden"
         >
           {docs.map((d) => {
             const isActive = d.id === active.id;
@@ -164,7 +164,7 @@ export function DossierReader({ docs }: { docs: DossierDoc[] }) {
                 type="button"
                 data-cursor
                 onClick={() => selectDoc(d.id)}
-                className={`shrink-0 rounded-full border px-4 py-2 text-[13px] whitespace-nowrap transition-colors ${
+                className={`shrink-0 rounded-full border px-4 py-2.5 text-[13px] whitespace-nowrap transition-colors ${
                   isActive
                     ? "border-coral bg-card text-coral"
                     : "border-line bg-panel text-muted hover:border-line2 hover:text-soft"
@@ -216,7 +216,7 @@ export function DossierReader({ docs }: { docs: DossierDoc[] }) {
           </aside>
 
           {/* Reading pane */}
-          <article className="min-w-0 rounded-[22px] border border-line bg-panel p-7 md:p-[42px]">
+          <article className="min-w-0 rounded-[22px] border border-line bg-panel p-5 sm:p-7 md:p-[42px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.id}

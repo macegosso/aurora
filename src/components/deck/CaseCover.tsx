@@ -26,6 +26,9 @@ export function CaseCover({ slide }: { slide: Slide }) {
         }}
       />
 
+      {/* extra darkening on phones so the copy stays legible over the orb */}
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-bg/45 sm:hidden" aria-hidden />
+
       <div className="wrap relative z-10 w-full">
         <div className="max-w-[760px] py-24">
           <div
@@ -36,7 +39,7 @@ export function CaseCover({ slide }: { slide: Slide }) {
             {slide.sec}
           </div>
 
-          <h1 className="font-display text-[clamp(76px,13vw,168px)] leading-[0.9] font-bold tracking-[-0.04em]">
+          <h1 className="font-display text-[clamp(46px,13vw,168px)] leading-[0.92] font-bold tracking-[-0.03em] sm:leading-[0.9] sm:tracking-[-0.04em]">
             <span className="block overflow-hidden pb-[0.08em]">
               <span className="anim-hero-word text-aurora inline-block will-change-transform">
                 {slide.title}
