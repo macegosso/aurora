@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { gsap } from "@/lib/gsap";
 
 /**
- * Wraps children and pulls them toward the cursor on hover, settling back
- * with an elastic spring. Respects reduced-motion (no-op).
+ * Pulls children toward the cursor on hover. Uses gsap.quickTo (a single
+ * reusable tween) so high-frequency mousemove updates stay smooth.
  */
 export function Magnetic({
   children,
@@ -17,20 +17,31 @@ export function Magnetic({
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
+  const xTo = useRef<((v: number) => void) | null>(null);
+  const yTo = useRef<((v: number) => void) | null>(null);
 
-  const onMove = (e: React.MouseEvent) => {
+  useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    xTo.current = gsap.quickTo(el, "x", { duration: 0.45, ease: "power3.out" });
+    yTo.current = gsap.quickTo(el, "y", { duration: 0.45, ease: "power3.out" });
+    return () => {
+      gsap.killTweensOf(el);
+    };
+  }, []);
+
+  const onMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el || !xTo.current || !yTo.current) return;
     const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    gsap.to(el, { x: x * strength, y: y * strength, duration: 0.4, ease: "power3.out" });
+    xTo.current((e.clientX - rect.left - rect.width / 2) * strength);
+    yTo.current((e.clientY - rect.top - rect.height / 2) * strength);
   };
 
   const onLeave = () => {
-    if (!ref.current) return;
-    gsap.to(ref.current, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+    xTo.current?.(0);
+    yTo.current?.(0);
   };
 
   return (

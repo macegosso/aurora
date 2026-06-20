@@ -8,6 +8,9 @@ import { Reveal } from "@/components/Reveal";
 import { Magnetic } from "@/components/Magnetic";
 import { CaseCover } from "./CaseCover";
 import { CenaSection } from "./CenaSection";
+import { CountUp } from "./CountUp";
+import { ProvarSection } from "./ProvarSection";
+import { JourneySection } from "./JourneySection";
 
 const ACCENT_TEXT: Record<Accent, string> = {
   coral: "text-coral",
@@ -120,7 +123,7 @@ function SizingBars({ slide }: { slide: Slide }) {
             <div className="mb-2 flex items-baseline gap-3">
               <span className="w-10 font-mono text-[12px] tracking-[0.14em] text-muted">{tiers[i]}</span>
               <span className="font-display text-[clamp(28px,5vw,48px)] leading-none font-bold" style={{ color: colors[i] }}>
-                {st.big}
+                <CountUp value={st.big} />
               </span>
               <span className="text-[13px] text-muted">{st.label}</span>
             </div>
@@ -154,7 +157,7 @@ function BigStats({ slide }: { slide: Slide }) {
               viewport={{ once: true, margin: "0px 0px -15% 0px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              {st.big}
+              <CountUp value={st.big} />
             </motion.div>
             <div className="mt-3 text-[14px] leading-snug text-muted">{st.label}</div>
           </div>
@@ -431,7 +434,7 @@ export function DeckStory({ slides }: { slides: Slide[] }) {
         const inner =
           s.kind === "cover" ? (
             <CaseCover slide={s} />
-          ) : s.kind === "quote" && /pessoa/i.test(s.sec) ? (
+          ) : s.kind === "quote" && /a cena/i.test(s.title) ? (
             <CenaSection slide={s} />
           ) : s.kind === "quote" ? (
             <QuoteSection slide={s} />
@@ -439,6 +442,10 @@ export function DeckStory({ slides }: { slides: Slide[] }) {
             <ProtoSection slide={s} />
           ) : s.kind === "principles" ? (
             <Closing slide={s} />
+          ) : /como a IA resolve/i.test(s.sec) ? (
+            <ProvarSection slide={s} />
+          ) : s.sec === "O problema" && s.cards ? (
+            <JourneySection slide={s} tinted={i % 2 === 1} />
           ) : (
             <StorySection slide={s} index={i} />
           );

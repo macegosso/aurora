@@ -11,8 +11,8 @@ const FACTS = [
 ];
 
 export function CenaSection({ slide }: { slide: Slide }) {
-  // try a real photo first; fall back to the illustrated portrait
-  const [src, setSrc] = useState("/personas/marlene.jpg");
+  // try the real photo first; fall back to the illustrated portrait
+  const [src, setSrc] = useState("/personas/marlene.webp");
 
   return (
     <section className="flex min-h-screen snap-start flex-col justify-center border-b border-line py-24">
@@ -55,7 +55,7 @@ export function CenaSection({ slide }: { slide: Slide }) {
           </Reveal>
           {slide.lead ? (
             <Reveal delay={0.1}>
-              <p className="mt-5 font-display text-[clamp(26px,3.6vw,42px)] leading-[1.15] font-semibold tracking-tight text-text">
+              <p className="mt-5 font-display text-[clamp(20px,2.5vw,30px)] leading-[1.28] font-medium tracking-tight text-text">
                 {slide.lead}
               </p>
             </Reveal>

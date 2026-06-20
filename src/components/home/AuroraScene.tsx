@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -202,19 +202,37 @@ function Stars({ count = 480 }: { count?: number }) {
 }
 
 export default function AuroraScene() {
+  const wrap = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(true);
+
+  // pause rendering when the canvas is scrolled offscreen (saves GPU / keeps
+  // scrolling smooth)
+  useEffect(() => {
+    const el = wrap.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => setActive(e.isIntersecting),
+      { rootMargin: "120px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <Canvas
-      camera={{ position: [0, 0, 5], fov: 45 }}
-      dpr={[1, 1.75]}
-      frameloop="always"
-      gl={{ antialias: true, powerPreference: "high-performance" }}
-      style={{ pointerEvents: "none" }}
-      onCreated={({ gl }) => gl.setClearColor("#05060e", 1)}
-    >
-      <color attach="background" args={["#05060e"]} />
-      <Curtain />
-      <Stars />
-      <Core />
-    </Canvas>
+    <div ref={wrap} className="h-full w-full">
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 45 }}
+        dpr={[1, 1.5]}
+        frameloop={active ? "always" : "never"}
+        gl={{ antialias: true, powerPreference: "high-performance" }}
+        style={{ pointerEvents: "none" }}
+        onCreated={({ gl }) => gl.setClearColor("#05060e", 1)}
+      >
+        <color attach="background" args={["#05060e"]} />
+        <Curtain />
+        <Stars />
+        <Core />
+      </Canvas>
+    </div>
   );
 }

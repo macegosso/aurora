@@ -5,14 +5,14 @@ export const SLIDES: Slide[] = [
     "kind": "cover",
     "sec": "AI Product Challenge · Blip",
     "title": "Aurora",
-    "lead": "Dona Marlene trabalhou 40 anos. O INSS negou. Na fila, um homem de terno cobrou 30% para ajudar.",
-    "note": "Um copiloto de IA no WhatsApp que devolve às pessoas o acesso ao que já é delas."
+    "lead": "Um copiloto de IA, no WhatsApp, que devolve às pessoas o acesso ao que já é delas — começando pelo INSS.",
+    "note": "A história de por que ele precisa existir — do problema ao pedido."
   },
   {
     "kind": "quote",
-    "sec": "O problema, em uma pessoa",
+    "sec": "Por quem a Aurora existe",
     "title": "A cena",
-    "lead": "Ela aceitou. Não por ingenuidade — por falta de escolha. Ela não entendia o sistema. Ele entendia.",
+    "lead": "Dona Marlene trabalhou 40 anos. O INSS negou a aposentadoria. Na fila, um homem de terno ofereceu ajuda — por 30% do que era dela. Ela aceitou: não por ingenuidade, mas por falta de escolha. Ela não entendia o sistema; ele entendia.",
     "footnote": "A distância entre o que ela sabia e o que ele sabia é o negócio inteiro dele."
   },
   {
