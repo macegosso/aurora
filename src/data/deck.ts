@@ -1,4 +1,4 @@
-import type { Slide, CV as CVData } from "./types";
+import type { Slide } from "./types";
 
 export const SLIDES: Slide[] = [
   {
@@ -34,6 +34,26 @@ export const SLIDES: Slide[] = [
     ],
     "note": "Negar errado não reduz fila: só transfere a pessoa da fila do pedido para a fila do recurso. A dor não diminui — ela se aprofunda.",
     "footnote": "Fontes: IBDP / Anuário da Justiça Federal · TCU via ConJur · CRPS"
+  },
+  {
+    "sec": "Negócio · tamanho e modelo",
+    "title": "R$ 8–15 bi/ano vazam da renda das pessoas para intermediários. Esse é o valor a redistribuir — sem virar o vilão.",
+    "stats": [
+      {
+        "big": "R$ 8–15 bi",
+        "label": "TAM/ano · ~1 mi de concessões judiciais × honorário ~R$ 8–12 mil + camada administrativa"
+      },
+      {
+        "big": "R$ 3–7 bi",
+        "label": "SAM/ano · a fração navegável e roteável (30–50% dos casos)"
+      },
+      {
+        "big": "274 mil",
+        "label": "SOM · BPC autismo (dobrou em 2 anos), dentro de um BPC de 6,51 mi"
+      }
+    ],
+    "note": "Cobrar % do benefício replicaria o intermediário. A economia vem de outro lugar: lead qualificado para advogado verificado, canal B2B2C (sindicato, CRAS, empregador) e fixo simbólico em marcos de valor — jamais % de quem menos tem.",
+    "footnote": "Margem já é positiva (receita R$ 200–1.500 vs custo R$ 15–40). A variável que importa é a conversão — e é ela que o Concierge mede."
   },
   {
     "sec": "O problema",
@@ -150,7 +170,7 @@ export const SLIDES: Slide[] = [
       },
       {
         "t": "Dizer a verdade",
-        "d": "Sem direito. Diz, com a norma na mão e uma alternativa. O 'não' honesto que o mercado predatório esconde.",
+        "d": "Sem direito. Diz, com a norma na mão e uma alternativa. O 'não' honesto que o intermediário, por modelo de negócio, não dá.",
         "accent": "gold"
       }
     ],
@@ -184,7 +204,7 @@ export const SLIDES: Slide[] = [
         ]
       }
     ],
-    "note": "Por isso recusei o mercado veicular: é determinístico (workflow basta) e já foi vencido por Gringo/Zapay. Produto é tanto o que se escolhe quanto o que se recusa."
+    "note": "Onde um fluxo determinístico bastaria, a IA é enfeite. O previdenciário precisa das três coisas acima ao mesmo tempo — por isso é o terreno certo."
   },
   {
     "sec": "Solução · como a IA resolve",
@@ -274,33 +294,13 @@ export const SLIDES: Slide[] = [
       {
         "h": "Os critérios que falsificam a tese",
         "items": [
-          "Se <30% dos casos forem navegáveis → a tese enfraquece.",
+          "Se menos de 30% dos casos forem navegáveis — ou seja, resolvíveis pela própria Aurora, sem advogado (erro de CNIS com prova, exigência mal respondida, impacto não demonstrado) — a tese enfraquece.",
           "Se ninguém age → repensar. Se ninguém paga nem aceita rota → repensar o negócio.",
           "Este é o portão que autoriza construir. Sem passar, não escrevemos código."
         ]
       }
     ],
     "note": "Confiança e adoção não se medem em survey — se medem vendo a pessoa agir, ou não, sob risco real."
-  },
-  {
-    "sec": "Negócio · tamanho e modelo",
-    "title": "R$ 8–15 bi/ano vazam da renda das pessoas para intermediários. Esse é o valor a redistribuir — sem virar o vilão.",
-    "stats": [
-      {
-        "big": "R$ 8–15 bi",
-        "label": "TAM/ano · ~1 mi de concessões judiciais × honorário ~R$ 8–12 mil + camada administrativa"
-      },
-      {
-        "big": "R$ 3–7 bi",
-        "label": "SAM/ano · a fração navegável e roteável (30–50% dos casos)"
-      },
-      {
-        "big": "274 mil",
-        "label": "SOM · BPC autismo (dobrou em 2 anos), dentro de um BPC de 6,51 mi"
-      }
-    ],
-    "note": "Cobrar % do benefício replicaria o intermediário. A economia vem de outro lugar: lead qualificado para advogado verificado, canal B2B2C (sindicato, CRAS, empregador) e fixo simbólico em marcos de valor — jamais % de quem menos tem.",
-    "footnote": "Margem já é positiva (receita R$ 200–1.500 vs custo R$ 15–40). A variável que importa é a conversão — e é ela que o Concierge mede."
   },
   {
     "kind": "cards",
@@ -313,7 +313,7 @@ export const SLIDES: Slide[] = [
         "accent": "coral"
       },
       {
-        "t": "Virar lead-gen para predador",
+        "t": "Virar um gerador de leads pagos",
         "d": "Contra-métrica: razão autosserviço:roteado. Sem ela, o incentivo econômico empurraria tudo para a rota paga. A qualidade da rede é o coração ético.",
         "accent": "gold"
       },
@@ -404,33 +404,3 @@ export const SLIDES: Slide[] = [
     "footnote": "Ela não entendia o sistema, e ele entendia. A Aurora existe para inverter exatamente essa frase."
   }
 ];
-
-export const CV: CVData = {
-  name:      "Seu Nome Completo",
-  role:      "Product Manager",
-  tagline:   "Construindo produtos de IA com foco em impacto real.",
-  location:  "Cidade, Brasil",
-  email:     "seu.email@exemplo.com",
-  phone:     "+55 (00) 00000-0000",
-  linkedin:  "linkedin.com/in/seu-perfil",
-  github:    "",            // opcional — ex.: "github.com/seu-usuario"
-  website:   "",            // opcional
-  summary:   "Resumo profissional em 2–3 frases: quem você é, sua especialidade em produto, e o tipo de problema que você gosta de resolver. Conecte com produto e IA.",
-
-  experience: [
-    { role:"Cargo", company:"Empresa", period:"2022 — hoje", points:[
-      "Conquista ou responsabilidade com impacto mensurável (use número quando possível).",
-      "Outra entrega relevante — foco em produto, descoberta, priorização ou dados." ] },
-    { role:"Cargo anterior", company:"Empresa", period:"2019 — 2022", points:[
-      "Conquista relevante.",
-      "Outra conquista relevante." ] }
-  ],
-
-  skills: ["Product discovery","Estratégia de produto","Priorização","Métricas & dados","IA aplicada","Pesquisa com usuários"],
-
-  education: [
-    { course:"Curso / Formação", school:"Instituição", period:"Ano" }
-  ],
-
-  languages: ["Português (nativo)","Inglês (fluente)"]
-};

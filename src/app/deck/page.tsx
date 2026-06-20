@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { SLIDES } from "@/data/deck";
-import { DeckViewer } from "@/components/deck/DeckViewer";
+import { DeckStory } from "@/components/deck/DeckStory";
 
 export const metadata: Metadata = {
-  title: "Deck",
+  title: "A apresentação",
   description:
-    "A narrativa do case Aurora, slide a slide — leia os títulos em sequência e você terá o argumento inteiro.",
+    "A dor e a solução do case Aurora — do problema ao pedido, numa leitura única e navegável.",
 };
 
 export default function DeckPage() {
-  return <DeckViewer slides={SLIDES} />;
+  return <DeckStory slides={SLIDES} />;
 }

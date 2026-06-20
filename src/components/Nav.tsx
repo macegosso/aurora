@@ -10,7 +10,6 @@ const LINKS: { href: string; label: string }[] = [
   { href: "/deck", label: "Deck" },
   { href: "/prototipo", label: "Protótipo" },
   { href: "/dossie", label: "Dossiê" },
-  { href: "/cv", label: "CV" },
 ];
 
 export function Nav() {

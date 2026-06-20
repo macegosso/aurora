@@ -31,18 +31,10 @@ const ENTRIES: Entry[] = [
   {
     href: "/dossie",
     title: "O dossiê",
-    desc: "PRD, deep-dive, base normativa, discovery, red-team — a profundidade.",
+    desc: "PRD, discovery, base normativa, estratégia, red-team — a profundidade.",
     accent: "#f0c24b",
     tint: "rgba(240,194,75,.14)",
     icon: <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />,
-  },
-  {
-    href: "/cv",
-    title: "O CV",
-    desc: "Quem está por trás do case — experiência e contato.",
-    accent: "#ff5fa8",
-    tint: "rgba(255,95,168,.14)",
-    icon: <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />,
   },
 ];
 
@@ -54,7 +46,7 @@ export function EntryCards() {
           Explore o case
         </h2>
       </Reveal>
-      <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
         {ENTRIES.map((e, i) => (
           <Reveal key={e.href} delay={i * 0.08}>
             <Magnetic strength={0.18} className="block h-full">
