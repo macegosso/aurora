@@ -252,7 +252,7 @@ function Bullets({ slide }: { slide: Slide }) {
 
 function Cover({ slide }: { slide: Slide }) {
   return (
-    <section className="relative flex min-h-[88svh] items-center overflow-hidden border-b border-line">
+    <section className="relative flex min-h-screen snap-start items-center overflow-hidden border-b border-line">
       <div
         className="pointer-events-none absolute inset-0 z-0"
         aria-hidden
@@ -290,7 +290,7 @@ function Cover({ slide }: { slide: Slide }) {
 
 function QuoteSection({ slide }: { slide: Slide }) {
   return (
-    <section className="border-b border-line py-28 md:py-40">
+    <section className="flex min-h-screen snap-start flex-col justify-center border-b border-line py-24">
       <div className="wrap max-w-[920px]">
         <Reveal>
           <div className="font-mono text-[12px] tracking-[0.18em] text-muted uppercase">{slide.sec}</div>
@@ -312,7 +312,7 @@ function QuoteSection({ slide }: { slide: Slide }) {
 
 function ProtoSection({ slide }: { slide: Slide }) {
   return (
-    <section className="border-b border-line py-28">
+    <section className="flex min-h-screen snap-start flex-col justify-center border-b border-line py-24">
       <div className="wrap">
         <div
           className="ring-aurora overflow-hidden rounded-[28px] border border-line2 p-8 md:p-14"
@@ -359,7 +359,7 @@ function ProtoSection({ slide }: { slide: Slide }) {
 
 function Closing({ slide }: { slide: Slide }) {
   return (
-    <section className="py-28 md:py-36">
+    <section className="flex min-h-screen snap-start flex-col justify-center py-24">
       <div className="wrap">
         <Reveal>
           <Kicker>{slide.sec}</Kicker>
@@ -395,7 +395,7 @@ function Closing({ slide }: { slide: Slide }) {
 function StorySection({ slide, index }: { slide: Slide; index: number }) {
   const tinted = index % 2 === 1;
   return (
-    <section className={`border-b border-line py-24 md:py-28 ${tinted ? "bg-bg2/40" : ""}`}>
+    <section className={`flex min-h-screen snap-start flex-col justify-center border-b border-line py-24 ${tinted ? "bg-bg2/40" : ""}`}>
       <div className="wrap">
         <Reveal>
           <Kicker n={index}>{slide.sec}</Kicker>
@@ -445,6 +445,13 @@ function buildChapters(slides: Slide[]) {
 export function DeckStory({ slides }: { slides: Slide[] }) {
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
+
+  // magnetic section scrolling, scoped to this page
+  useEffect(() => {
+    const el = document.documentElement;
+    el.classList.add("snap-deck");
+    return () => el.classList.remove("snap-deck");
+  }, []);
 
   const ids = slides.map((_, i) => `sec-${i}`);
   const activeId = useActiveId(ids);

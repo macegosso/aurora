@@ -310,6 +310,17 @@ h4 {
   }
 }
 
+/* magnetic section scroll (the case / deck) */
+.snap-deck {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 72px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .snap-deck {
+    scroll-snap-type: none;
+  }
+}
+
 /* read-progress bar (dossier) */
 .read-progress {
   position: fixed;

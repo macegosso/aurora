@@ -12,7 +12,9 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
+    // On the case (/deck) we use native scroll + CSS scroll-snap, which Lenis
+    // would override — so skip smooth scroll there.
+    if (reduce || pathname === "/deck") return;
 
     const lenis = new Lenis({
       duration: 1.1,
@@ -33,7 +35,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       lenis.destroy();
       lenisRef = null;
     };
-  }, []);
+  }, [pathname]);
 
   // Reset scroll on route change (v16 no longer auto-scrolls to top for us).
   useEffect(() => {
