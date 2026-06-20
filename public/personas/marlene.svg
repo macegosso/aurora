@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600" role="img" aria-label="Retrato ilustrado da Dona Marlene">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="22%" r="85%">
+      <stop offset="0%" stop-color="#1a1f3a" />
+      <stop offset="100%" stop-color="#0b0f1e" />
+    </radialGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3a3357" />
+      <stop offset="100%" stop-color="#2a2742" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#9d8bff" stop-opacity="0.28" />
+      <stop offset="60%" stop-color="#34e3c4" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#34e3c4" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="480" height="600" fill="url(#bg)" />
+  <circle cx="240" cy="180" r="220" fill="url(#glow)" />
+
+  <!-- shoulders / cardigan -->
+  <path d="M70 600 C70 470 140 430 240 430 C340 430 410 470 410 600 Z" fill="url(#cloth)" />
+  <path d="M240 432 L210 600 M240 432 L270 600" stroke="#211f36" stroke-width="6" opacity="0.6" />
+  <!-- collar -->
+  <path d="M205 440 Q240 470 275 440" fill="none" stroke="#4a4570" stroke-width="8" stroke-linecap="round" />
+
+  <!-- neck -->
+  <rect x="212" y="372" width="56" height="70" rx="26" fill="#d8a888" />
+
+  <!-- hair back -->
+  <ellipse cx="240" cy="250" rx="132" ry="150" fill="#c7cbd8" />
+  <circle cx="240" cy="120" r="40" fill="#c7cbd8" />
+
+  <!-- face -->
+  <ellipse cx="240" cy="262" rx="104" ry="118" fill="#e6b89c" />
+  <!-- hair front framing -->
+  <path d="M136 250 Q150 140 240 132 Q330 140 344 250 Q346 196 300 168 Q240 150 180 168 Q134 196 136 250 Z" fill="#d3d7e1" />
+  <!-- ears -->
+  <circle cx="138" cy="270" r="18" fill="#e0ad8f" />
+  <circle cx="342" cy="270" r="18" fill="#e0ad8f" />
+
+  <!-- glasses -->
+  <g fill="none" stroke="#2b2b3d" stroke-width="6">
+    <rect x="168" y="244" width="58" height="46" rx="16" />
+    <rect x="254" y="244" width="58" height="46" rx="16" />
+    <path d="M226 264 H254" stroke-linecap="round" />
+    <path d="M168 258 L150 252 M312 258 L330 252" stroke-linecap="round" />
+  </g>
+  <!-- eyes -->
+  <circle cx="197" cy="268" r="6" fill="#2b2b3d" />
+  <circle cx="283" cy="268" r="6" fill="#2b2b3d" />
+  <!-- brows -->
+  <path d="M176 232 Q197 224 218 232 M262 232 Q283 224 304 232" fill="none" stroke="#b9bdc9" stroke-width="5" stroke-linecap="round" />
+
+  <!-- nose + gentle smile + soft age lines -->
+  <path d="M240 286 Q250 312 236 320" fill="none" stroke="#cf9d80" stroke-width="5" stroke-linecap="round" />
+  <path d="M210 344 Q240 366 270 344" fill="none" stroke="#bd6f63" stroke-width="6" stroke-linecap="round" />
+  <path d="M172 300 Q182 312 176 326 M308 300 Q298 312 304 326" fill="none" stroke="#d8a98c" stroke-width="3" stroke-linecap="round" opacity="0.7" />
+  <!-- cheeks -->
+  <circle cx="180" cy="318" r="14" fill="#e79d8a" opacity="0.35" />
+  <circle cx="300" cy="318" r="14" fill="#e79d8a" opacity="0.35" />
+</svg>

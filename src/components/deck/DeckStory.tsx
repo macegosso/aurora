@@ -7,6 +7,7 @@ import type { Accent, Slide } from "@/data/types";
 import { Reveal } from "@/components/Reveal";
 import { Magnetic } from "@/components/Magnetic";
 import { CaseCover } from "./CaseCover";
+import { CenaSection } from "./CenaSection";
 
 const ACCENT_TEXT: Record<Accent, string> = {
   coral: "text-coral",
@@ -430,6 +431,8 @@ export function DeckStory({ slides }: { slides: Slide[] }) {
         const inner =
           s.kind === "cover" ? (
             <CaseCover slide={s} />
+          ) : s.kind === "quote" && /pessoa/i.test(s.sec) ? (
+            <CenaSection slide={s} />
           ) : s.kind === "quote" ? (
             <QuoteSection slide={s} />
           ) : s.kind === "proto" ? (
