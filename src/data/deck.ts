@@ -190,6 +190,12 @@ export const SLIDES: Slide[] = [
         "items": [
           "CNIS com buracos, foto torta, laudo. Ler a vida desorganizada de alguém real."
         ]
+      },
+      {
+        "h": "Linguagem natural",
+        "items": [
+          "Traduzir juridiquês ↔ português, e o relato de uma vida para os critérios da perícia."
+        ]
       }
     ],
     "note": "Onde um fluxo determinístico bastaria, a IA é decorativa. Aqui as três coisas acontecem ao mesmo tempo."

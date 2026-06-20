@@ -11,6 +11,14 @@ import { CenaSection } from "./CenaSection";
 import { CountUp } from "./CountUp";
 import { ProvarSection } from "./ProvarSection";
 import { JourneySection } from "./JourneySection";
+import {
+  IntermediarioSection,
+  WhyNowSplit,
+  SaidasSection,
+  WhyAITrio,
+  MecanicaFlow,
+  RiscosSection,
+} from "./DeckSections";
 
 const ACCENT_TEXT: Record<Accent, string> = {
   coral: "text-coral",
@@ -431,6 +439,7 @@ export function DeckStory({ slides }: { slides: Slide[] }) {
       {chapters.length ? <ChapterNav chapters={chapters} activeIdx={activeIdx} /> : null}
 
       {slides.map((s, i) => {
+        const tinted = i % 2 === 1;
         const inner =
           s.kind === "cover" ? (
             <CaseCover slide={s} />
@@ -442,10 +451,22 @@ export function DeckStory({ slides }: { slides: Slide[] }) {
             <ProtoSection slide={s} />
           ) : s.kind === "principles" ? (
             <Closing slide={s} />
+          ) : s.sec === "O problema" && s.cards ? (
+            <JourneySection slide={s} tinted={tinted} />
+          ) : s.sec === "Problema · o intermediário" ? (
+            <IntermediarioSection slide={s} tinted={tinted} />
+          ) : s.sec === "Insight · por que agora" ? (
+            <WhyNowSplit slide={s} tinted={tinted} />
+          ) : s.sec === "Solução" && s.cards ? (
+            <SaidasSection slide={s} tinted={tinted} />
+          ) : s.sec === "Solução · por que IA" ? (
+            <WhyAITrio slide={s} tinted={tinted} />
           ) : /como a IA resolve/i.test(s.sec) ? (
             <ProvarSection slide={s} />
-          ) : s.sec === "O problema" && s.cards ? (
-            <JourneySection slide={s} tinted={i % 2 === 1} />
+          ) : s.sec === "Solução · a máquina de confiança" ? (
+            <MecanicaFlow slide={s} tinted={tinted} />
+          ) : s.sec === "Negócio · os riscos de frente" ? (
+            <RiscosSection slide={s} tinted={tinted} />
           ) : (
             <StorySection slide={s} index={i} />
           );
