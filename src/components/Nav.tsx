@@ -7,9 +7,9 @@ import { Mark } from "./Mark";
 
 const LINKS: { href: string; label: string }[] = [
   { href: "/", label: "Visão geral" },
-  { href: "/deck", label: "Deck" },
+  { href: "/deck", label: "Case" },
   { href: "/prototipo", label: "Protótipo" },
-  { href: "/dossie", label: "Dossiê" },
+  { href: "/dossie", label: "Documentos" },
 ];
 
 export function Nav() {

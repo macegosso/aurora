@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s · Aurora",
   },
   description:
-    "Aurora: um copiloto de IA, no WhatsApp, que ajuda cidadãos a navegar o INSS e o BPC. Deck, protótipo navegável, dossiê de produto e CV.",
+    "Aurora: um copiloto de IA, no WhatsApp, que ajuda cidadãos a navegar o INSS e o BPC. O case, o protótipo navegável e os documentos de produto.",
   openGraph: {
     title: "Aurora — case de produto",
     description:

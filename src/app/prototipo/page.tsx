@@ -13,9 +13,10 @@ export default function PrototipoPage() {
   return (
     <>
       <SectionHeading kicker="O protótipo" title="A demonstração navegável">
-        Não é mockup de tela — é a experiência e a mecânica de IA, lado a lado.
-        Percorra cada caso passo a passo e veja, a cada passo, as três camadas: a
-        conversa, o raio-X do raciocínio e os dados por baixo.
+        Uma prova de conceito navegável — não a tela final, mas a experiência e a
+        mecânica de IA, lado a lado. Percorra cada caso passo a passo e veja, a
+        cada passo, as três camadas: a conversa, o raio-X do raciocínio e os
+        dados por trás.
       </SectionHeading>
 
       <HowToRead />

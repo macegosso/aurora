@@ -14,8 +14,8 @@ type Entry = {
 const ENTRIES: Entry[] = [
   {
     href: "/deck",
-    title: "O deck",
-    desc: "Do problema ao pedido — a história e a tese do produto, em sequência.",
+    title: "O case",
+    desc: "Do problema ao pedido — a dor e a solução, numa leitura guiada.",
     accent: "#34e3c4",
     tint: "rgba(52,227,196,.14)",
     icon: <path d="M2 3h20v14H2zM8 21h8M12 17v4" />,
@@ -30,7 +30,7 @@ const ENTRIES: Entry[] = [
   },
   {
     href: "/dossie",
-    title: "O dossiê",
+    title: "Documentos organizadores",
     desc: "PRD, discovery, base normativa, estratégia, red-team — a profundidade.",
     accent: "#f0c24b",
     tint: "rgba(240,194,75,.14)",

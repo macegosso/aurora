@@ -3,7 +3,7 @@ import { DOSSIER } from "@/data/dossier";
 import { DossierReader } from "@/components/dossie/DossierReader";
 
 export const metadata: Metadata = {
-  title: "Dossiê",
+  title: "Documentos organizadores",
 };
 
 export default function DossierPage() {

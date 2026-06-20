@@ -144,7 +144,7 @@ export function DossierReader({ docs }: { docs: DossierDoc[] }) {
       />
 
       <SectionHeading
-        kicker="O dossiê"
+        kicker="Documentos organizadores"
         title="A profundidade por trás de cada afirmação"
       >
         Os documentos que sustentam o case.

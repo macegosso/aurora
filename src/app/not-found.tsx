@@ -9,8 +9,8 @@ export default function NotFound() {
         Página não encontrada
       </h1>
       <p className="mt-4 max-w-md text-muted">
-        Esta rota não existe no case. Volte ao portal e siga pelo deck, protótipo,
-        dossiê ou CV.
+        Esta rota não existe no case. Volte ao portal e siga pelo case, protótipo
+        ou documentos.
       </p>
       <Link
         href="/"
