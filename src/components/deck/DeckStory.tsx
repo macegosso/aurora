@@ -6,6 +6,7 @@ import { motion, useScroll, useSpring } from "motion/react";
 import type { Accent, Slide } from "@/data/types";
 import { Reveal } from "@/components/Reveal";
 import { Magnetic } from "@/components/Magnetic";
+import { CaseCover } from "./CaseCover";
 
 const ACCENT_TEXT: Record<Accent, string> = {
   coral: "text-coral",
@@ -250,44 +251,6 @@ function Bullets({ slide }: { slide: Slide }) {
 
 /* ---------------- section shells ---------------- */
 
-function Cover({ slide }: { slide: Slide }) {
-  return (
-    <section className="relative flex min-h-screen snap-start items-center overflow-hidden border-b border-line">
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        aria-hidden
-        style={{
-          background:
-            "radial-gradient(60% 55% at 75% 30%, rgba(157,139,255,0.16), transparent 70%), radial-gradient(45% 45% at 10% 80%, rgba(52,227,196,0.12), transparent 70%)",
-        }}
-      />
-      <div className="wrap relative z-10">
-        <Reveal immediate>
-          <div className="font-mono text-[12px] tracking-[0.18em] text-muted uppercase">{slide.sec}</div>
-        </Reveal>
-        <Reveal immediate delay={0.1}>
-          <h1 className="mt-5 font-display text-[clamp(72px,12vw,150px)] leading-[0.92] font-bold tracking-[-0.04em]">
-            <span className="text-aurora">{slide.title}</span>
-          </h1>
-        </Reveal>
-        {slide.lead ? (
-          <Reveal immediate delay={0.2}>
-            <p className="mt-7 max-w-[680px] text-[clamp(18px,2.3vw,24px)] leading-snug font-medium text-text">{slide.lead}</p>
-          </Reveal>
-        ) : null}
-        {slide.note ? (
-          <Reveal immediate delay={0.3}>
-            <p className="mt-5 max-w-[620px] text-[15px] leading-relaxed text-muted">{slide.note}</p>
-          </Reveal>
-        ) : null}
-      </div>
-      <div className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 font-mono text-[11px] tracking-[0.2em] text-muted uppercase">
-        <span className="inline-block animate-pulse">role para começar ↓</span>
-      </div>
-    </section>
-  );
-}
-
 function QuoteSection({ slide }: { slide: Slide }) {
   return (
     <section className="flex min-h-screen snap-start flex-col justify-center border-b border-line py-24">
@@ -466,7 +429,7 @@ export function DeckStory({ slides }: { slides: Slide[] }) {
       {slides.map((s, i) => {
         const inner =
           s.kind === "cover" ? (
-            <Cover slide={s} />
+            <CaseCover slide={s} />
           ) : s.kind === "quote" ? (
             <QuoteSection slide={s} />
           ) : s.kind === "proto" ? (
